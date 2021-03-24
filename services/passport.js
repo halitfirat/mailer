@@ -9,7 +9,8 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: '/return'
+      callbackURL: '/api/return',
+      proxy: true
     },
     async function (accessToken, refreshToken, profile, cb) {
       const existingUser = await User.findOne({ googleId: profile.id });

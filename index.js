@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const passport = require('passport');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 require('./models/User');
 require('./services/passport');
 
@@ -18,7 +19,8 @@ app.set('view engine', 'ejs');
 // logging, parsing, and session handling.
 app.use(require('morgan')('combined'));
 app.use(require('cookie-parser')());
-app.use(require('body-parser').urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded());
 app.use(
   require('express-session')({
     secret: 'keyboard cat',
@@ -33,5 +35,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 require('./routes/authRoutes')(app);
+require('./routes/emailRoutes')(app);
 
 app.listen(process.env.PORT || 8080);
