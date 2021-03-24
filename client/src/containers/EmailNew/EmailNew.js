@@ -15,25 +15,33 @@ const EmailNew = () => {
 
   return (
     <form onSubmit={handleSubmit((data) => axios.post('/api/emails', data))}>
-      <input name="replyTo" placeholder="Sender" ref={register({ pattern })} />
-      {errors.sender && <span>Email is not valid</span>}
+      <input
+        name="replyTo"
+        placeholder="Sender"
+        ref={register({ required: true, pattern })}
+      />
+      {errors.replyTo && <span>valid email required</span>}
 
-      <input name="to" placeholder="Receiver" ref={register({ pattern })} />
-      {errors.receiver && <span>Email is not valid</span>}
+      <input
+        name="to"
+        placeholder="Receiver"
+        ref={register({ required: true, pattern })}
+      />
+      {errors.to && <span>valid email required</span>}
 
       <input
         name="subject"
         placeholder="Subject"
         ref={register({ required: true })}
       />
-      {errors.subject && <span>Subject is required</span>}
+      {errors.subject && <span>subject required</span>}
 
       <input
         name="text"
         placeholder="Your message..."
         ref={register({ required: true })}
       />
-      {errors.text && <span>Message is required</span>}
+      {errors.text && <span>message required</span>}
 
       <button type="submit">Submit</button>
     </form>
