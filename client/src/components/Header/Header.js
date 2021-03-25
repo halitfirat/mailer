@@ -11,7 +11,7 @@ const Header = () => {
       case null:
         return;
       case false:
-        return <a href="/api/login">Signin with Google</a>;
+        return <a href="/api/login/google">Signin with Google</a>;
       default:
         return <a href="/api/logout">Logout</a>;
     }

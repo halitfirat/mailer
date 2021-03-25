@@ -25,11 +25,12 @@ const {
   sendEmailFailure
 } = sendEmailSlice.actions;
 
-export const sendEmail = (email) => async (dispatch) => {
+export const sendEmail = (email, history) => async (dispatch) => {
   dispatch(sendEmailRequest());
 
   const res = await axios.post('/api/emails', email);
 
+  history.push('/emails');
   if (res.status === 200) {
     dispatch(sendEmailSuccess());
   } else {

@@ -1,5 +1,6 @@
-import { useHistory } from 'react-router-dom';
+import React from 'react';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import styles from './Dashboard.module.css';
 

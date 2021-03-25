@@ -1,5 +1,7 @@
-import { useForm } from 'react-hook-form';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 
 import styles from './SendEmail.module.css';
 import { sendEmail } from './SendEmail.slice';
@@ -12,12 +14,15 @@ const NewEmail = () => {
     (state) => state.sendEmail.sendEmailInProgress
   );
   const user = useSelector((state) => state.auth.user);
+  const history = useHistory();
   const { register, handleSubmit, errors } = useForm();
 
   return (
     <>
       {user ? (
-        <form onSubmit={handleSubmit((data) => dispatch(sendEmail(data)))}>
+        <form
+          onSubmit={handleSubmit((data) => dispatch(sendEmail(data, history)))}
+        >
           <input
             name="replyTo"
             placeholder="Sender"

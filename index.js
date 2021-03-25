@@ -11,10 +11,6 @@ mongoose.connect(process.env.MONGO_URI);
 
 const app = express();
 
-// Configure view engine to render EJS templates.
-app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
-
 // Use application-level middleware for common functionality, including
 // logging, parsing, and session handling.
 app.use(require('morgan')('combined'));
