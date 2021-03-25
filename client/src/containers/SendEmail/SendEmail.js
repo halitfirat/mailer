@@ -1,11 +1,13 @@
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
+import { useDispatch } from 'react-redux';
 
-import styles from './EmailNew.module.css';
+import styles from './SendEmail.module.css';
+import { sendEmail } from './SendEmail.slice';
 
 const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-const EmailNew = () => {
+const NewEmail = () => {
+  const dispatch = useDispatch();
   const { register, handleSubmit, errors } = useForm();
 
   // const sendMail = async (data) => {
@@ -14,7 +16,7 @@ const EmailNew = () => {
   // };
 
   return (
-    <form onSubmit={handleSubmit((data) => axios.post('/api/emails', data))}>
+    <form onSubmit={handleSubmit((data) => dispatch(sendEmail(data)))}>
       <input
         name="replyTo"
         placeholder="Sender"
@@ -48,4 +50,4 @@ const EmailNew = () => {
   );
 };
 
-export default EmailNew;
+export default NewEmail;

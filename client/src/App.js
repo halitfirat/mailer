@@ -3,10 +3,10 @@ import { useDispatch } from 'react-redux';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 import { Header } from './components';
-import { EmailNew } from './containers';
-import { Dashboard } from './containers';
+import { Dashboard } from './components';
+import { SendEmail } from './containers';
 
-import { fetchUser } from './slices/authSlice';
+import { fetchUser } from './slices/auth.slice';
 
 const LandingPage = () => <div>LandingPage</div>;
 
@@ -22,7 +22,7 @@ const App = () => {
       <Header />
       <Route path="/" exact component={LandingPage} />
       <Route path="/emails" exact component={Dashboard} />
-      <Route path="/emails/new" component={EmailNew} />
+      <Route path="/emails/send" component={SendEmail} />
     </BrowserRouter>
   );
 };

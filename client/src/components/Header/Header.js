@@ -3,8 +3,6 @@ import { useSelector } from 'react-redux';
 
 import styles from './Header.module.css';
 
-// import { user } from '../../store/Auth.duck';
-
 const Header = () => {
   const user = useSelector((state) => state.auth.user);
 
