@@ -35,4 +35,12 @@ module.exports = (app) => {
 
     res.send(response);
   });
+
+  app.get('/api/emails', requireLogin, async (req, res) => {
+    const response = await Email.find({
+      _user: req.user._id
+    }).exec();
+
+    res.send(response);
+  });
 };

@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import styles from './Dashboard.module.css';
 
 import { Button } from '../../components';
+import { ListEmails } from '../../containers';
 
 const Dashboard = () => {
   const user = useSelector((state) => state.auth.user);
@@ -11,6 +12,7 @@ const Dashboard = () => {
 
   return (
     <>
+      <ListEmails />
       {user ? (
         <Button label="Write" onClick={() => history.push('/emails/send')} />
       ) : null}
