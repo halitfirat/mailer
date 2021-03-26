@@ -1,21 +1,32 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './ListEmails.module.css';
 
-import { listEmails } from './ListEmail.slice';
+import { listEmails, deleteEmail } from './ListEmails.slice';
 
 const ListEmails = () => {
   const dispatch = useDispatch();
+
+  const [deletingEmailId, setDeletingEmailId] = useState('');
+
   const user = useSelector((state) => state.auth.user);
   const listEmailsInProgress = useSelector(
     (state) => state.listEmails.listEmailsInProgress
   );
   const emails = useSelector((state) => state.listEmails.emails);
+  const deleteEmailInProgress = useSelector(
+    (state) => state.listEmails.deleteEmailInProgress
+  );
 
   useEffect(() => {
     dispatch(listEmails());
   }, []);
+
+  const onDeleteClick = (emailId) => {
+    setDeletingEmailId(emailId);
+    dispatch(deleteEmail(emailId));
+  };
 
   const renderEmails = () => {
     return (
@@ -25,14 +36,27 @@ const ListEmails = () => {
             <span className="visually-hidden">Loading...</span>
           </div>
         ) : (
-          emails.map(({ sent, replyTo, to, subject }) => {
+          emails.map(({ sent, replyTo, to, subject, _id }) => {
             return (
-              <li>
-                <div>{sent}</div>
-                <div>{replyTo}</div>
-                <div>{to}</div>
-                <div>{subject}</div>
-              </li>
+              <>
+                <li key={_id}>
+                  <div>{sent}</div>
+                  <div>{replyTo}</div>
+                  <div>{to}</div>
+                  <div>{subject}</div>
+                </li>
+                <button onClick={() => onDeleteClick(_id)}>
+                  delete{' '}
+                  {_id === deletingEmailId && deleteEmailInProgress ? (
+                    <div
+                      className="spinner-border spinner-border-sm"
+                      role="status"
+                    >
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                  ) : null}
+                </button>
+              </>
             );
           })
         )}

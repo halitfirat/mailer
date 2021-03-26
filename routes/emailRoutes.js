@@ -43,4 +43,10 @@ module.exports = (app) => {
 
     res.send(response);
   });
+
+  app.delete('/api/emails/:emailId', async (req, res) => {
+    await Email.findOneAndDelete({ _id: req.params.emailId });
+
+    res.send({});
+  });
 };
