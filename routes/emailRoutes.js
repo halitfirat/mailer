@@ -49,4 +49,22 @@ module.exports = (app) => {
 
     res.send({});
   });
+
+  app.put('/api/emails/:emailId', async (req, res) => {
+    const { sent, replyTo, to, subject, text } = req.body;
+
+    const response = await Email.findOneAndUpdate(
+      { _id: req.params.emailId },
+      {
+        sent,
+        replyTo,
+        to,
+        subject,
+        text
+      },
+      { new: true }
+    );
+
+    res.send(response);
+  });
 };

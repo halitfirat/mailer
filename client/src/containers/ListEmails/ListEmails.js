@@ -4,11 +4,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './ListEmails.module.css';
 
 import { listEmails, deleteEmail } from './ListEmails.slice';
+import { Modal } from '../../components';
+import { UpdateEmail } from '../../containers';
 
 const ListEmails = () => {
   const dispatch = useDispatch();
 
   const [deletingEmailId, setDeletingEmailId] = useState('');
+  const [updatingEmailId, setUpdatingEmailId] = useState('');
+  const [modalOpen, setModalOpen] = useState(false);
 
   const user = useSelector((state) => state.auth.user);
   const listEmailsInProgress = useSelector(
@@ -28,6 +32,19 @@ const ListEmails = () => {
     dispatch(deleteEmail(emailId));
   };
 
+  const onUpdateClick = (emailId) => {
+    setUpdatingEmailId(emailId);
+    setModalOpen(true);
+  };
+
+  const getUpdatingEmail = () => {
+    return emails.filter((email) => email._id === updatingEmailId)[0];
+  };
+
+  const onModalClose = () => {
+    setModalOpen(false);
+  };
+
   const renderEmails = () => {
     return (
       <>
@@ -38,8 +55,8 @@ const ListEmails = () => {
         ) : (
           emails.map(({ sent, replyTo, to, subject, _id }) => {
             return (
-              <>
-                <li key={_id}>
+              <React.Fragment key={_id}>
+                <li>
                   <div>{sent}</div>
                   <div>{replyTo}</div>
                   <div>{to}</div>
@@ -56,10 +73,14 @@ const ListEmails = () => {
                     </div>
                   ) : null}
                 </button>
-              </>
+                <button onClick={() => onUpdateClick(_id)}>update</button>
+              </React.Fragment>
             );
           })
         )}
+        <Modal open={modalOpen} onClose={onModalClose}>
+          <UpdateEmail email={getUpdatingEmail()} onClose={onModalClose} />
+        </Modal>
       </>
     );
   };

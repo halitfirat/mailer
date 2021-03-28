@@ -1,12 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const listEmailsSlice = createSlice({
   name: 'listEmails',
   initialState: {
     emails: [],
     listEmailsInProgress: false,
-    deleteEmailInProgress: false
+    deleteEmailInProgress: false,
+    updateEmailInProgress: false
   },
   reducers: {
     listEmailsRequest: (state) => {
@@ -28,6 +30,19 @@ const listEmailsSlice = createSlice({
     },
     deleteEmailFailure: (state) => {
       state.deleteEmailInProgress = false;
+    },
+    updateEmailRequest: (state) => {
+      state.updateEmailInProgress = true;
+    },
+    updateEmailSuccess: (state, action) => {
+      state.emails = state.emails.map((em) =>
+        em._id === action.payload._id ? action.payload : em
+      );
+
+      state.updateEmailInProgress = false;
+    },
+    updateEmailFailure: (state) => {
+      state.updateEmailInProgress = false;
     }
   }
 });
@@ -38,31 +53,52 @@ const {
   listEmailsFailure,
   deleteEmailRequest,
   deleteEmailSuccess,
-  deleteEmailFailure
+  deleteEmailFailure,
+  updateEmailRequest,
+  updateEmailSuccess,
+  updateEmailFailure
 } = listEmailsSlice.actions;
 
 export const listEmails = () => async (dispatch) => {
-  dispatch(listEmailsRequest());
+  try {
+    dispatch(listEmailsRequest());
+    const res = await axios.get('/api/emails');
 
-  const res = await axios.get('/api/emails');
-  console.log(res);
-
-  if (res) {
     dispatch(listEmailsSuccess(res.data));
-  } else {
+  } catch (error) {
+    console.log(error);
+    toast.error(error.message);
     dispatch(listEmailsFailure);
   }
 };
 
 export const deleteEmail = (emailId) => async (dispatch) => {
-  dispatch(deleteEmailRequest());
+  try {
+    dispatch(deleteEmailRequest());
+    await axios.delete(`/api/emails/${emailId}`);
 
-  const res = await axios.delete(`/api/emails/${emailId}`);
-
-  if (res) {
     dispatch(deleteEmailSuccess(emailId));
-  } else {
+  } catch (error) {
+    console.log(error);
+    toast.error(error.message);
     dispatch(deleteEmailFailure());
+  }
+};
+
+export const updateEmail = (emailId, emailData, onClose) => async (
+  dispatch
+) => {
+  try {
+    dispatch(updateEmailRequest());
+    const res = await axios.put(`/api/emails/${emailId}`, emailData);
+
+    dispatch(updateEmailSuccess(res.data));
+    onClose();
+  } catch (error) {
+    console.log(error);
+    toast.error(error.message);
+    dispatch(updateEmailFailure());
+    onClose();
   }
 };
 
