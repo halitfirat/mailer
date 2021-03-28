@@ -17,7 +17,7 @@ export const authSlice = createSlice({
 const { setUser } = authSlice.actions;
 
 export const fetchUser = () => async (dispatch) => {
-  const res = await axios.get('/api/user');
+  const res = await axios.get('/api/current_user');
 
   dispatch(setUser(res.data));
 };
