@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter, Route } from 'react-router-dom';
+import { Container } from '@material-ui/core';
 
 import { Header } from './components';
 import { Dashboard } from './components';
@@ -18,12 +19,14 @@ const App = () => {
   }, []);
 
   return (
-    <BrowserRouter>
-      <Header />
-      <Route path="/" exact component={LandingPage} />
-      <Route path="/emails" exact component={Dashboard} />
-      <Route path="/emails/send" component={SendEmail} />
-    </BrowserRouter>
+    <Container>
+      <BrowserRouter>
+        <Header />
+        <Route path="/" exact component={LandingPage} />
+        <Route path="/emails" exact component={Dashboard} />
+        <Route path="/emails/send" component={SendEmail} />
+      </BrowserRouter>
+    </Container>
   );
 };
 

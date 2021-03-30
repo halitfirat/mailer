@@ -1,10 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 
 import styles from './Dashboard.module.css';
 
-import { Button } from '../../components';
 import { ListEmails } from '../../containers';
 
 const Dashboard = () => {
@@ -15,7 +15,14 @@ const Dashboard = () => {
     <>
       <ListEmails />
       {user ? (
-        <Button label="Write" onClick={() => history.push('/emails/send')} />
+        <Button
+          className={styles.button}
+          variant="contained"
+          color="primary"
+          onClick={() => history.push('/emails/send')}
+        >
+          Send
+        </Button>
       ) : null}
     </>
   );

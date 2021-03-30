@@ -38,6 +38,7 @@ const UpdateEmail = ({ email, onClose }) => {
         )}
       >
         <DialogTitle id="form-dialog-title">Update Email</DialogTitle>
+
         <DialogContent>
           <Controller
             render={(props) => (
@@ -61,6 +62,7 @@ const UpdateEmail = ({ email, onClose }) => {
             control={control}
             // rules={{ required: true, pattern }}
           />
+
           <Controller
             render={(props) => (
               <FormControl margin="dense" fullWidth>
@@ -82,6 +84,7 @@ const UpdateEmail = ({ email, onClose }) => {
             control={control}
             rules={{ required: true, pattern }}
           />
+
           <Controller
             render={(props) => (
               <FormControl margin="dense" fullWidth>
@@ -103,6 +106,7 @@ const UpdateEmail = ({ email, onClose }) => {
             rules={{ required: true, pattern }}
             fullWidth
           />
+
           <Controller
             render={(props) => (
               <FormControl margin="dense" fullWidth>
@@ -123,6 +127,7 @@ const UpdateEmail = ({ email, onClose }) => {
             control={control}
             rules={{ required: true }}
           />
+
           <Controller
             render={(props) => (
               <FormControl margin="dense" fullWidth>
@@ -145,12 +150,13 @@ const UpdateEmail = ({ email, onClose }) => {
             rules={{ required: true }}
           />
         </DialogContent>
+
         <DialogActions>
           <Button onClick={onClose} color="primary">
             Cancel
           </Button>
           <Button type="submit" color="primary">
-            Update {updateEmailInProgress && <CircularProgress size={14} />}
+            {!updateEmailInProgress ? 'Update' : <CircularProgress size={14} />}
           </Button>
         </DialogActions>
       </form>
