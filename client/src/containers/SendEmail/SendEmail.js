@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import styles from './SendEmail.module.css';
 import { sendEmail } from './SendEmail.slice';
@@ -52,12 +53,7 @@ const NewEmail = () => {
           {errors.text && <span>message required</span>}
 
           <button type="submit">
-            Submit{' '}
-            {sendEmailInProgress ? (
-              <div className="spinner-border spinner-border-sm" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </div>
-            ) : null}
+            Submit {sendEmailInProgress ? <CircularProgress size={14} /> : null}
           </button>
         </form>
       ) : (

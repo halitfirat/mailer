@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import styles from './ListEmails.module.css';
 
@@ -49,9 +50,7 @@ const ListEmails = () => {
     return (
       <>
         {listEmailsInProgress ? (
-          <div className="spinner-border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
+          <CircularProgress />
         ) : (
           emails.map(({ sent, replyTo, to, subject, _id }) => {
             return (
@@ -65,12 +64,7 @@ const ListEmails = () => {
                 <button onClick={() => onDeleteClick(_id)}>
                   delete{' '}
                   {_id === deletingEmailId && deleteEmailInProgress ? (
-                    <div
-                      className="spinner-border spinner-border-sm"
-                      role="status"
-                    >
-                      <span className="visually-hidden">Loading...</span>
-                    </div>
+                    <CircularProgress size={14} />
                   ) : null}
                 </button>
                 <button onClick={() => onUpdateClick(_id)}>update</button>
