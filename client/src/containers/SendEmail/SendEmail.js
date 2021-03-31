@@ -10,7 +10,8 @@ import {
   FormHelperText,
   Container,
   Paper,
-  Button
+  Button,
+  Typography
 } from '@material-ui/core/';
 
 import styles from './SendEmail.module.css';
@@ -30,7 +31,7 @@ const NewEmail = () => {
   return (
     <Container className={styles.container} maxWidth="sm">
       <Paper className={styles.paper} elevation={4}>
-        <h3>Send Email</h3>
+        <Typography variant="h6">Send Email</Typography>
         {user ? (
           <form
             onSubmit={handleSubmit((data) =>
@@ -40,7 +41,7 @@ const NewEmail = () => {
             <Controller
               render={(props) => {
                 return (
-                  <FormControl fullWidth>
+                  <FormControl margin={'dense'} fullWidth>
                     <InputLabel htmlFor="my-input">Sender</InputLabel>
                     <Input
                       id="my-input"
@@ -62,7 +63,7 @@ const NewEmail = () => {
             <Controller
               render={(props) => {
                 return (
-                  <FormControl fullWidth>
+                  <FormControl margin={'dense'} fullWidth>
                     <InputLabel htmlFor="my-input">Receiver</InputLabel>
                     <Input
                       id="my-input"
@@ -84,7 +85,7 @@ const NewEmail = () => {
             <Controller
               render={(props) => {
                 return (
-                  <FormControl fullWidth>
+                  <FormControl margin={'dense'} fullWidth>
                     <InputLabel htmlFor="my-input">Subject</InputLabel>
                     <Input
                       id="my-input"
@@ -106,7 +107,7 @@ const NewEmail = () => {
             <Controller
               render={(props) => {
                 return (
-                  <FormControl fullWidth>
+                  <FormControl margin={'dense'} fullWidth>
                     <InputLabel htmlFor="my-input">Message</InputLabel>
                     <Input
                       id="my-input"

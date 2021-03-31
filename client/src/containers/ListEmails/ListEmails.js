@@ -91,21 +91,6 @@ const ListEmails = () => {
         ) : (
           emails.map(({ sent, replyTo, to, subject, text, _id }, i, arr) => {
             return (
-              // <React.Fragment key={_id}>
-              //   <li>
-              //     <div>{sent}</div>
-              //     <div>{replyTo}</div>
-              //     <div>{to}</div>
-              //     <div>{subject}</div>
-              //   </li>
-              //   <button onClick={() => onDeleteClick(_id)}>
-              //     delete{' '}
-              //     {_id === deletingEmailId && deleteEmailInProgress ? (
-              //       <CircularProgress size={14} />
-              //     ) : null}
-              //   </button>
-              //   <button onClick={() => onUpdateClick(_id)}>update</button>
-              // </React.Fragment>
               <>
                 <ListItem>
                   <ListItemAvatar>
@@ -158,9 +143,6 @@ const ListEmails = () => {
       {user ? (
         <Grid container spacing={2}>
           <Grid item xs={12} md={12}>
-            <Typography variant="h6" className={classes.title}>
-              Email List
-            </Typography>
             <List dense={dense}>{renderEmails()}</List>
           </Grid>
         </Grid>

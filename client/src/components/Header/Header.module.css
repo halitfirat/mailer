@@ -3,6 +3,11 @@
   padding: 15px;
 }
 
-.link {
+.authButton {
+  margin-right: 5px;
+  text-decoration: none;
+}
+
+.noDecoration {
   text-decoration: none;
 }
