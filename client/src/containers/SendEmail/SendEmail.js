@@ -2,6 +2,8 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
+
+import styles from './SendEmail.module.css';
 import {
   CircularProgress,
   FormControl,
@@ -11,10 +13,11 @@ import {
   Container,
   Paper,
   Button,
-  Typography
+  Typography,
+  IconButton
 } from '@material-ui/core/';
+import { Send } from '@material-ui/icons/';
 
-import styles from './SendEmail.module.css';
 import { sendEmail } from './SendEmail.slice';
 
 const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -127,9 +130,13 @@ const NewEmail = () => {
             />
 
             <div className={styles.buttonContainer}>
-              <Button type="submit">
-                {!sendEmailInProgress ? 'Send' : <CircularProgress size={14} />}
-              </Button>
+              <IconButton type="submit">
+                {!sendEmailInProgress ? (
+                  <Send />
+                ) : (
+                  <CircularProgress size={14} />
+                )}
+              </IconButton>
             </div>
           </form>
         ) : (

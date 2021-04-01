@@ -5,11 +5,10 @@ import { Container } from '@material-ui/core';
 
 import { Header } from './components';
 import { Dashboard } from './components';
+import { LandingPage } from './components';
 import { SendEmail } from './containers';
 
 import { fetchUser } from './slices/auth.slice';
-
-const LandingPage = () => <div>LandingPage</div>;
 
 const App = () => {
   const dispatch = useDispatch();

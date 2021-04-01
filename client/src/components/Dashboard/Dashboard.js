@@ -21,7 +21,7 @@ const Dashboard = () => {
           color="primary"
           onClick={() => history.push('/emails/send')}
         >
-          New Email
+          Send Email
         </Button>
       ) : null}
     </>

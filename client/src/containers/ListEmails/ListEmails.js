@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { format } from 'date-fns';
 
 import styles from './ListEmails.module.css';
@@ -8,7 +7,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import EmailRoundedIcon from '@material-ui/icons/EmailRounded';
 import {
-  Typography,
   makeStyles,
   Grid,
   List,
@@ -18,7 +16,9 @@ import {
   ListItemSecondaryAction,
   Avatar,
   IconButton,
-  Paper
+  Paper,
+  LinearProgress,
+  CircularProgress
 } from '@material-ui/core';
 
 import { listEmails, deleteEmail } from './ListEmails.slice';
@@ -87,7 +87,7 @@ const ListEmails = () => {
     return (
       <Paper elevation={4}>
         {listEmailsInProgress ? (
-          <CircularProgress />
+          <LinearProgress />
         ) : (
           emails.map(({ sent, replyTo, to, subject, text, _id }, i, arr) => {
             return (
