@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import GitHubIcon from '@material-ui/icons/GitHub';
 import {
   Button,
   AppBar,
@@ -17,15 +18,19 @@ const useStyles = makeStyles({
   root: {
     flexGrow: 1
   },
-  title: {
+  item: {
     flexGrow: 1
   },
-  titleLink: {
+  link: {
     textDecoration: 'none',
     color: 'white'
   },
   buttonAuth: {
     textDecoration: 'none'
+  },
+  githubIcon: {
+    position: 'relative',
+    top: '1px'
   }
 });
 
@@ -59,6 +64,7 @@ const Header = () => {
             >
               Login
             </Button>
+
             <Menu
               id="menu-appbar"
               anchorEl={anchorEl}
@@ -77,6 +83,7 @@ const Header = () => {
               <a href="/auth/google" className={classes.buttonAuth}>
                 <MenuItem onClick={handleClose}>Login with Google</MenuItem>
               </a>
+
               <a href="/auth/facebook" className={classes.buttonAuth}>
                 <MenuItem onClick={handleClose}>Login with Facebook</MenuItem>
               </a>
@@ -95,6 +102,7 @@ const Header = () => {
             >
               <AccountCircle />
             </IconButton>
+
             <Menu
               id="menu-appbar"
               anchorEl={anchorEl}
@@ -123,10 +131,20 @@ const Header = () => {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            <Link className={classes.titleLink} to={user ? '/emails' : '/'}>
+          <Typography variant="h6" className={classes.item}>
+            <Link className={classes.link} to={user ? '/emails' : '/'}>
               Mailer
             </Link>
+          </Typography>
+
+          <Typography className={classes.item}>
+            <a
+              className={classes.link}
+              href="https://github.com/halitfirat/mailer"
+            >
+              <GitHubIcon fontSize="inherit" className={classes.githubIcon} />{' '}
+              GitHub
+            </a>
           </Typography>
           {renderAuth()}
         </Toolbar>
