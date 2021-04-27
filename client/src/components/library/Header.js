@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-
-import styles from './Header.module.css';
+import { Link } from 'react-router-dom';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 import {
   Button,
   AppBar,
@@ -13,25 +12,27 @@ import {
   MenuItem,
   makeStyles
 } from '@material-ui/core';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   root: {
     flexGrow: 1
   },
-  menuButton: {
-    marginRight: theme.spacing(2)
-  },
   title: {
     flexGrow: 1
+  },
+  titleLink: {
+    textDecoration: 'none',
+    color: 'white'
+  },
+  buttonAuth: {
+    textDecoration: 'none'
   }
-}));
+});
 
 const Header = () => {
-  const history = useHistory();
-  const user = useSelector((state) => state.auth.user);
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const user = useSelector((state) => state.auth.user);
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
   const handleMenu = (event) => {
@@ -73,11 +74,11 @@ const Header = () => {
               open={open}
               onClose={handleClose}
             >
-              <a href="/auth/google" className={styles.noDecoration}>
-                <MenuItem onClick={handleClose}>Sign in with Google</MenuItem>
+              <a href="/auth/google" className={classes.buttonAuth}>
+                <MenuItem onClick={handleClose}>Login with Google</MenuItem>
               </a>
-              <a href="/auth/facebook" className={styles.noDecoration}>
-                <MenuItem onClick={handleClose}>Sign in with Facebook</MenuItem>
+              <a href="/auth/facebook" className={classes.buttonAuth}>
+                <MenuItem onClick={handleClose}>Login with Facebook</MenuItem>
               </a>
             </Menu>
           </div>
@@ -109,7 +110,7 @@ const Header = () => {
               open={open}
               onClose={handleClose}
             >
-              <a href="/api/logout" className={styles.noDecoration}>
+              <a href="/api/logout" className={classes.buttonAuth}>
                 <MenuItem onClick={handleClose}>Logout</MenuItem>
               </a>
             </Menu>
@@ -122,12 +123,10 @@ const Header = () => {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <Typography
-            variant="h6"
-            className={classes.title}
-            onClick={() => history.push('/emails')}
-          >
-            Emails
+          <Typography variant="h6" className={classes.title}>
+            <Link className={classes.titleLink} to={user ? '/emails' : '/'}>
+              Mailer
+            </Link>
           </Typography>
           {renderAuth()}
         </Toolbar>

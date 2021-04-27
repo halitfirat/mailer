@@ -1,9 +1,27 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
 const mongoose = require('mongoose');
 
 const User = mongoose.model('users');
+
+passport.use(
+  new LocalStrategy(function (username, password, done) {
+    User.findOne({ username: username }, function (err, user) {
+      if (err) {
+        return done(err);
+      }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  })
+);
 
 passport.use(
   new GoogleStrategy(

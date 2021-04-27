@@ -1,10 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const sendEmailSlice = createSlice({
   name: 'sendEmail',
   initialState: {
-    sendEmailInProgress: false
+    templates: [],
+    sendEmailInProgress: false,
+    saveTemplateInProgress: false
   },
   reducers: {
     sendEmailRequest: (state) => {
@@ -15,6 +18,15 @@ const sendEmailSlice = createSlice({
     },
     sendEmailFailure: (state) => {
       state.sendEmailInProgress = false;
+    },
+    saveTemplateRequest: (state) => {
+      state.saveTemplateInProgress = true;
+    },
+    saveTemplateSuccess: (state) => {
+      state.saveTemplateInProgress = false;
+    },
+    saveTemplateFailure: (state) => {
+      state.saveTemplateInProgress = false;
     }
   }
 });
@@ -22,19 +34,40 @@ const sendEmailSlice = createSlice({
 const {
   sendEmailRequest,
   sendEmailSuccess,
-  sendEmailFailure
+  sendEmailFailure,
+  saveTemplateRequest,
+  saveTemplateSuccess,
+  saveTemplateFailure
 } = sendEmailSlice.actions;
 
-export const sendEmail = (email, history) => async (dispatch) => {
-  dispatch(sendEmailRequest());
+export const sendEmail = (emailData, history) => async (dispatch) => {
+  try {
+    dispatch(sendEmailRequest());
+    const res = await axios.post('/api/emails', emailData);
 
-  const res = await axios.post('/api/emails', email);
-
-  history.push('/emails');
-  if (res.status === 200) {
-    dispatch(sendEmailSuccess());
-  } else {
+    if (res.status === 200) {
+      history.push('/emails');
+      dispatch(sendEmailSuccess());
+    }
+  } catch (error) {
+    console.log(error);
     dispatch(sendEmailFailure());
+    toast.error(error.message);
+  }
+};
+
+export const saveTemplate = (templateData) => async (dispatch) => {
+  try {
+    dispatch(saveTemplateRequest());
+    const res = axios.post('/api/templates', templateData);
+
+    if (res.status === 200) {
+      dispatch(saveTemplateSuccess());
+    }
+  } catch (error) {
+    console.log(error);
+    dispatch(saveTemplateFailure());
+    toast.error(error.mesage);
   }
 };
 

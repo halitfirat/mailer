@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 require('./models/User');
 require('./models/Email');
+require('./models/Template');
 require('./services/passport');
 
 mongoose.connect(process.env.MONGO_URI);
@@ -24,6 +25,7 @@ app.use(passport.session());
 
 require('./routes/authRoutes')(app);
 require('./routes/emailRoutes')(app);
+require('./routes/templateRoutes')(app);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));

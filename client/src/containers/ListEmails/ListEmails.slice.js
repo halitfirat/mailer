@@ -30,19 +30,6 @@ const listEmailsSlice = createSlice({
     },
     deleteEmailFailure: (state) => {
       state.deleteEmailInProgress = false;
-    },
-    updateEmailRequest: (state) => {
-      state.updateEmailInProgress = true;
-    },
-    updateEmailSuccess: (state, action) => {
-      state.emails = state.emails.map((em) =>
-        em._id === action.payload._id ? action.payload : em
-      );
-
-      state.updateEmailInProgress = false;
-    },
-    updateEmailFailure: (state) => {
-      state.updateEmailInProgress = false;
     }
   }
 });
@@ -53,10 +40,7 @@ const {
   listEmailsFailure,
   deleteEmailRequest,
   deleteEmailSuccess,
-  deleteEmailFailure,
-  updateEmailRequest,
-  updateEmailSuccess,
-  updateEmailFailure
+  deleteEmailFailure
 } = listEmailsSlice.actions;
 
 export const listEmails = () => async (dispatch) => {
@@ -67,8 +51,11 @@ export const listEmails = () => async (dispatch) => {
     dispatch(listEmailsSuccess(res.data));
   } catch (error) {
     console.log(error);
-    toast.error(error.message);
     dispatch(listEmailsFailure);
+
+    if (error.response.status !== 401) {
+      toast.error(error.message);
+    }
   }
 };
 
@@ -80,25 +67,8 @@ export const deleteEmail = (emailId) => async (dispatch) => {
     dispatch(deleteEmailSuccess(emailId));
   } catch (error) {
     console.log(error);
-    toast.error(error.message);
     dispatch(deleteEmailFailure());
-  }
-};
-
-export const updateEmail = (emailId, emailData, onClose) => async (
-  dispatch
-) => {
-  try {
-    dispatch(updateEmailRequest());
-    const res = await axios.put(`/api/emails/${emailId}`, emailData);
-
-    dispatch(updateEmailSuccess(res.data));
-    onClose();
-  } catch (error) {
-    console.log(error);
     toast.error(error.message);
-    dispatch(updateEmailFailure());
-    onClose();
   }
 };
 

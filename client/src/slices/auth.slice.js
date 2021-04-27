@@ -13,7 +13,6 @@ export const authSlice = createSlice({
   }
 });
 
-// Action creators are generated for each case reducer function
 const { setUser } = authSlice.actions;
 
 export const fetchUser = () => async (dispatch) => {

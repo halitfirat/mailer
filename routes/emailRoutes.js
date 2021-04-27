@@ -12,8 +12,8 @@ module.exports = (app) => {
     const { replyTo, to, subject, text } = req.body;
 
     const msg = {
-      to, // Change to your recipient
-      from: 'entwikla@gmail.com', // Change to your verified sender
+      to,
+      from: 'entwikla@gmail.com',
       subject,
       text,
       html: `<h3>${text}</h3>`,
@@ -50,21 +50,18 @@ module.exports = (app) => {
     res.send({});
   });
 
-  app.put('/api/emails/:emailId', async (req, res) => {
-    const { sent, replyTo, to, subject, text } = req.body;
-
-    const response = await Email.findOneAndUpdate(
+  app.put('/api/emails/:emailId', (req, res) => {
+    Email.findOneAndUpdate(
       { _id: req.params.emailId },
-      {
-        sent,
-        replyTo,
-        to,
-        subject,
-        text
-      },
-      { new: true }
+      req.body,
+      { new: true },
+      (error, updatedRecord) => {
+        if (error) {
+          res.status(500).send({ error });
+        } else {
+          res.send(updatedRecord);
+        }
+      }
     );
-
-    res.send(response);
   });
 };
