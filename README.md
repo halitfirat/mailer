@@ -1,8 +1,10 @@
+<!--
 <br>
 :link: Live test at <a href="https://mailer37.herokuapp.com">https://mailer37.herokuapp.com</a>
 <br>
 <br>
 <br>
+-->
 <br>
 <h2>Mail Sending</h2>
 
